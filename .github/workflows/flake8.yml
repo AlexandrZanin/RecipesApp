@@ -1,27 +1,23 @@
-name: Code Quality
+name: Flake8
 
-on:
-  push:
-    branches:
-    - main
-  pull_request:
-    branches:
-    - main
+on: [push]
+
 jobs:
-  lint:
-    name: Python Lint
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.9"
-      - name: Run flake8
-        uses: julianwachholz/flake8-action@v2
-        with:
-          checkName: "Python Lint"
-          path: path/to/files
-          plugins: flake8-spellcheck
-          config: path/to/flake8.ini
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8
+    - name: Analysing the code with flake8
+      run: |
+        flake8 $(git ls-files '*.py')
