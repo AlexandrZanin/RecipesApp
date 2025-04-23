@@ -4,8 +4,8 @@ from httpx import AsyncClient
 data = {
     "title": "Каша манка",
     "cooking_time": 5,
-    "text": "Налить молоко в кастрюлю. "
-            "В горячее молоко засыпать манку, помешивая",
+    "text": "Налить молоко в кастрюлю."
+            " В горячее молоко засыпать манку, помешивая",
     "ingredients_list": "Молоко, манка, соль, сахар",
 }
 
@@ -22,7 +22,7 @@ class Tests:
                 "title": "Каша манная",
                 "cooking_time": "a",
                 "text": "Налить молоко в кастрюлю."
-                        " В горячее молоко засыпать манку, помешивая",
+                " В горячее молоко засыпать манку, помешивая",
                 "ingredients_list": "Молоко, манка, соль, сахар",
             },
         )
@@ -34,12 +34,11 @@ class Tests:
         assert response.json()["title"] == "Каша манка"
         assert response.json()["cooking_time"] == 5
         assert (
-            response.json()["text"]
-            == "Налить молоко в кастрюлю."
-               " В горячее молоко засыпать манку, помешивая"
+            response.json()["text"] == "Налить молоко в кастрюлю."
+            " В горячее молоко засыпать манку, помешивая"
         )
-        assert (response.json()["ingredients_list"]
-                == "Молоко, манка, соль, сахар")
+        assert (response.json()["ingredients_list"] ==
+                "Молоко, манка, соль, сахар")
 
     async def test_get_invalid(self, ac: AsyncClient):
         response = await ac.get("/recipes/11")

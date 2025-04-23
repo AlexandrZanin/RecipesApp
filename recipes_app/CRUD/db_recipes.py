@@ -19,7 +19,7 @@ async def creat_new_recipe(
     session: AsyncSession,
     recipe_create: schemas.RecipeCreate,
 ) -> Recipe:
-    recipe = Recipe(**recipe_create.dict())
+    recipe = Recipe(**recipe_create.model_dump())
     session.add(recipe)
     await session.commit()
     return recipe

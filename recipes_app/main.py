@@ -76,8 +76,8 @@ async def update_recipe(
     """
     update recipe
     """
-    db_recipe: Recipe | None = await (get_id_recipe
-                                      (session=session, recipe_id=recipe_id))
+    db_recipe: Recipe | None = await get_id_recipe(session=session,
+                                                   recipe_id=recipe_id)
     if not db_recipe:
         raise HTTPException(status_code=404, detail="Id not found")
     new_recipe = await update_recipes(
