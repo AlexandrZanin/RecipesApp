@@ -1,4 +1,5 @@
 from typing import AsyncGenerator
+
 from recipes_app.main import app, get_async_session
 
 from sqlalchemy.ext.asyncio import (AsyncSession,
@@ -46,7 +47,7 @@ async def async_db_engine():
 #     return AsyncClient(app=app, base_url='http://test')
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 async def ac() -> AsyncGenerator[AsyncClient, None]:
     async with AsyncClient(
         transport=ASGITransport(app=app), base_url="http://test"
@@ -69,7 +70,7 @@ async def add_recipe():
             title="Яйчница",
             cooking_time=5,
             text="Разбить яйца на горячую сковороду. "
-                 "Посолить. Добавить зелень и помидоры.",
+            "Посолить. Добавить зелень и помидоры.",
             ingredients_list="Яйца, укроп, соль, томаты",
         )
         sess.add(recipe)
