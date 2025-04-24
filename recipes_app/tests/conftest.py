@@ -1,7 +1,5 @@
 from typing import AsyncGenerator
 
-import pytest_asyncio
-
 from recipes_app.main import app, get_async_session
 
 from sqlalchemy.ext.asyncio import (AsyncSession,
